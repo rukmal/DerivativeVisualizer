@@ -1,7 +1,7 @@
 #' @title Profit/loss profile of Put Option
 #'
 #' @description
-#' \code{putOption} returns a tuple of values,
+#' \code{putOption} returns an object of values,
 #' with the x coordinate denoting the strike price
 #' of the underlying asset, and the y coordinate denoting the profit
 #' were the underlying to be at a price level of $x.
