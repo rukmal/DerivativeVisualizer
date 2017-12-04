@@ -22,9 +22,8 @@ putOption(strike, premium, size = NULL, short = NULL, strikeRange = NULL,
 }
 \description{
 \code{putOption} returns an object of values,
-with the x coordinate denoting the strike price
-of the underlying asset, and the y coordinate denoting the profit
-were the underlying to be at a price level of $x.
+with the strike price of the underlying asset,
+and the corresponding profit
 }
 \examples{
 putOption(strike = 100, premium = 4, short = TRUE)

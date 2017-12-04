@@ -2,9 +2,8 @@
 #'
 #' @description
 #' \code{callOption} returns an object of values,
-#' with the x coordinate denoting the strike price
-#' of the underlying asset, and the y coordinate denoting the profit
-#' were the underlying to be at a price level of $x.
+#' with the strike price of the underlying asset,
+#' and the corresponding profit
 #'
 #' @param strike Strike price of the call option.
 #' @param premium Premium of the call option.
