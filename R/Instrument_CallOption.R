@@ -10,20 +10,23 @@
 #' @param premium Premium of the call option.
 #' @param size Contract size of the option. Defaults to 100.
 #' @param short Set to TRUE if a short position is opened. Defaults to FALSE.
-#' @param lower Lower bound of the range of strike prices. Defaults to 90\% of strike price.
-#' @param upper Upper bound of the range of strike prices. Defaults to 110\% of strike price.
+#' @param strikeRange Range of strike prices for which profit/loss is calculated. Defualts to 90\% to 110\%.
 #' @param granularity Granularity of range of prices generated. Defaults to $0.01.
 #'
 #' @export
 #' @examples
 #' callOption(strike = 100, premium = 4, short = TRUE)
 
-callOption <- function (strike, premium, size = 100, short = FALSE, lower = NULL, upper = NULL, granularity = 0.01) {
-	if (is.null(lower)) {
-		lower <- strike * 0.9 # Lower defaults to 90% of strike price
+callOption <- function (strike, premium, size = NULL, short = NULL, strikeRange = NULL, granularity = NULL) {
+	if (is.null(strikeRange)) {
+		strikeRange <- get("range", envir = defaults)
 	}
-	if (is.null(upper)) {
-		upper <- strike * 1.1 # Upper defaults to 110% of strike price
+
+	lower <- strike * strikeRange[1]
+	upper <- strike * strikeRange[2]
+
+	if (is.null(granularity)) {
+		granularity <- get("granularity", envir = defaults)
 	}
 
 	strikePrices <- seq(from = lower, to = upper, by = granularity)
@@ -38,11 +41,23 @@ callOption <- function (strike, premium, size = 100, short = FALSE, lower = NULL
 		}
 	}
 
+	if (is.null(short)) {
+		short <- get("short", envir = defaults)
+	}
+
 	if (short) {
 		profitLoss <- profitLoss * (-1)
 	}
 
+	if (is.null(size)) {
+		size <- get("size", envir = defaults)
+	}
+
 	profitLoss <- profitLoss * size
 
-	t(rbind(strikePrices, profitLoss))
+	# Creating output object
+	output <- list("strikePrices" = strikePrices)
+	output$profitLoss <- profitLoss
+
+	output
 }
